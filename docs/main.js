@@ -17,9 +17,9 @@ function preload() {
 
 function create() {
   //背景の描画；
-  for (let i = 0; i < c.HORIZONTAL_PIXELS; i++) {
-    for (let j = 0; j < c.VERTICAL_PIXELS; j++) {
-      this.add.image( c.GRID_SIZE*i + c.GRID_PAD, c.GRID_SIZE*j + c.GRID_PAD, 'world', firstMap[j][i]);
+  for (let y = 0; y < c.VERTICAL_PIXELS; y++) {
+      for (let x = 0; x < c.HORIZONTAL_PIXELS; x++) {
+      this.add.image( c.GRID_SIZE*x + c.GRID_PAD, c.GRID_SIZE*y + c.GRID_PAD, 'world', firstMap[y][x]);
     }
   }
 
