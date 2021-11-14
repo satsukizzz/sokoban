@@ -1,23 +1,7 @@
 'use strict';
 
-const GRID_SIZE = 16;
-const GRID_PAD = GRID_SIZE / 2;
-const CANVAS_WIDTH = 800;
-const CANVAS_HEIGHT = 600;
-const GRASS_FLOOR_NUM = 32;
-
-const config = {
-  type: Phaser.AUTO,
-  width: CANVAS_WIDTH,
-  height: CANVAS_HEIGHT,
-  scene: {
-    preload,
-    create,
-    update,
-  },  
-};  
-
-let game = new Phaser.Game(config);
+import * as c from "./const.js";
+import * as maps from "./map.js";
 
 function preload() {
   //背景の画像
@@ -36,13 +20,13 @@ function preload() {
 
 function create() {
   //背景の描画；
-  for (let i = 0; i < CANVAS_WIDTH / GRID_SIZE; i++) {
-    for (let j = 0; j < CANVAS_HEIGHT / GRID_SIZE; j++) {
-      this.add.image( GRID_SIZE*i + GRID_PAD, GRID_SIZE*j + GRID_PAD, 'world', GRASS_FLOOR_NUM);
+  for (let i = 0; i < c.HORIZONTAL_PIXELS; i++) {
+    for (let j = 0; j < c.VERTICAL_PIXELS; j++) {
+      this.add.image( c.GRID_SIZE*i + c.GRID_PAD, c.GRID_SIZE*j + c.GRID_PAD, 'world', firstMap[j][i]);
     }
   }
 
-  let light = this.add.sprite(400, 300, 'light');
+  let light = this.add.sprite(400, 320, 'light');
 
   this.anims.create({
       key: 'down',
@@ -50,7 +34,7 @@ function create() {
       frameRate: 5,
       repeat: -1
   });
-  
+
   light.anims.play('down', false);
 };
 
@@ -58,3 +42,15 @@ function update() {
 
 };
 
+const config = {
+  type: Phaser.AUTO,
+  width: c.CANVAS_WIDTH,
+  height: c.CANVAS_HEIGHT,
+  scene: {
+    preload,
+    create,
+    update,
+  },
+};
+
+const game = new Phaser.Game(config);
