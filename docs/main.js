@@ -1,8 +1,5 @@
 'use strict';
 
-import * as c from "./const.js";
-import * as maps from "./map.js";
-
 function preload() {
   //背景の画像
   this.load.spritesheet(
