@@ -33,6 +33,19 @@ function create() {
     repeat: -1
   });
 
+  this.playerLight.anims.play('player-light-stable', false);
+
+  this.lightOne = this.physics.add.sprite(450, 320, 'light');
+
+  this.anims.create({
+    key: 'light-1-stable',
+    frames: this.anims.generateFrameNumbers('light', { start: 3, end: 5 }),
+    frameRate: 5,
+    repeat: -1
+  });
+
+  this.lightOne.anims.play('light-1-stable', false);
+
   this.keys = {};
   this.keys.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
   this.keys.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
