@@ -40,7 +40,7 @@ function update() {
 };
 
 const config = {
-  type: Phaser.AUTO,
+  type: Phaser.CANVAS,
   width: c.CANVAS_WIDTH,
   height: c.CANVAS_HEIGHT,
   scene: {
