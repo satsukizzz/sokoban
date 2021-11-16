@@ -56,7 +56,7 @@ class FirstScene extends Phaser.Scene {
 }
 
 const config = {
-  type: Phaser.CANVAS, //なぜかWEBGLだとdepthがうまくいかずに別の画像レンダーされてしまう問題があるのでCANVAS
+  type: Phaser.WEBGL, //なぜかWEBGLだとdepthがうまくいかずに別の画像レンダーされてしまう問題があるのでCANVAS
   // translation: dunno why it won't go with WEBGL
   // setting depth causes rendering error; the corresponding image should be rendered but moving "text" is not the letter "0" while in WEBGL   
   width: c.CANVAS_WIDTH,
