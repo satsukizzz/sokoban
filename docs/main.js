@@ -13,6 +13,7 @@ function preload() {
     'assets/pipo-hikarimono002.png',
     { frameWidth: 32, frameHeight: 32 }
   );
+  this.move = 0;
 };
 
 function create() {
@@ -53,6 +54,7 @@ function update() {
     this.playerLight.x += 5;
   }
 
+  this.move += 0.01;
 };
 
 const config = {
