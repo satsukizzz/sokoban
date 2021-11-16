@@ -23,19 +23,35 @@ function create() {
     }
   }
 
-  let light = this.add.sprite(400, 320, 'light');
+  this.playerLight = this.physics.add.sprite(400, 320, 'light');
 
   this.anims.create({
-      key: 'down',
-      frames: this.anims.generateFrameNumbers('light', { start: 0, end: 2 }),
-      frameRate: 5,
-      repeat: -1
+    key: 'player-light-stable',
+    frames: this.anims.generateFrameNumbers('light', { start: 0, end: 2 }),
+    frameRate: 5,
+    repeat: -1
   });
 
-  light.anims.play('down', false);
+  this.keys = {};
+  this.keys.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
+  this.keys.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+  this.keys.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+  this.keys.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 };
 
 function update() {
+  if (this.keys.keyW.isDown) {
+    this.playerLight.y += -5;
+  }
+  if (this.keys.keyS.isDown) {
+    this.playerLight.y += 5;
+  }
+  if (this.keys.keyA.isDown) {
+    this.playerLight.x += -5;
+  }
+  if (this.keys.keyD.isDown) {
+    this.playerLight.x += 5;
+  }
 
 };
 
@@ -43,6 +59,10 @@ const config = {
   type: Phaser.CANVAS,
   width: c.CANVAS_WIDTH,
   height: c.CANVAS_HEIGHT,
+  physics: {
+    default: 'arcade',
+    arcade: {debug: false}
+  },
   scene: {
     preload,
     create,
