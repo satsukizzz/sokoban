@@ -46,6 +46,8 @@ function create() {
 
   this.lightOne.anims.play('light-1-stable', false);
 
+  this.physics.add.overlap(this.playerLight, this.lightOne, (a, b) => {b.destroy()}, null, this);
+
   this.keys = {};
   this.keys.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
   this.keys.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
