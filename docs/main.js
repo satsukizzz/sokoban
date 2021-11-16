@@ -32,7 +32,7 @@ class FirstScene extends Phaser.Scene {
 
     this.text = this.add.text(100, 100, '0').setFontSize(64).setColor('#ff0');
     this.text2 = this.add.text(100, 150, '00').setFontSize(64).setColor('#f00');
-    this.text.setDepth(4);
+    this.text.setDepth(1);
     this.text2.setDepth(3);
     
     const light = this.add.sprite(400, 320, 'light');
