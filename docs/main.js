@@ -30,9 +30,9 @@ class FirstScene extends Phaser.Scene {
       }
     }
 
-    this.text = this.add.text(100, 100, this.move).setFontSize(64).setColor('#ff0');
-    this.text2 = this.add.text(100, 150, this.move).setFontSize(64).setColor('#f00');
-    // this.text.setDepth(1);
+    this.text = this.add.text(100, 100, '0').setFontSize(64).setColor('#ff0');
+    this.text2 = this.add.text(100, 150, '00').setFontSize(64).setColor('#f00');
+    this.text.setDepth(4);
     this.text2.setDepth(3);
     
     const light = this.add.sprite(400, 320, 'light');
@@ -57,6 +57,8 @@ class FirstScene extends Phaser.Scene {
 
 const config = {
   type: Phaser.CANVAS, //なぜかWEBGLだとdepthがうまくいかずに別の画像レンダーされてしまう問題があるのでCANVAS
+  // translation: dunno why it won't go with WEBGL
+  // setting depth causes rendering error; the corresponding image should be rendered but moving "text" is not the letter "0" while in WEBGL   
   width: c.CANVAS_WIDTH,
   height: c.CANVAS_HEIGHT,
   scene: [
