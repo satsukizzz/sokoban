@@ -22,14 +22,6 @@ class FirstScene extends Phaser.Scene {
   };
 
   create() {
-    //背景の描画；
-    this.image = Array.from(firstMap);
-    for (let y = 0; y < c.VERTICAL_PIXELS; y++) {
-        for (let x = 0; x < c.HORIZONTAL_PIXELS; x++) {
-        this.image[y][x] = this.add.image( c.GRID_SIZE*x + c.GRID_PAD, c.GRID_SIZE*y + c.GRID_PAD, 'world', firstMap[y][x]);
-      }
-    }
-
     this.text = this.add.text(100, 100, '0').setFontSize(64).setColor('#ff0');
     this.text2 = this.add.text(100, 150, '00').setFontSize(64).setColor('#f00');
     this.text.setDepth(1);
