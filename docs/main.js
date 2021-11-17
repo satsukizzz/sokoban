@@ -53,6 +53,23 @@ function create() {
     },
     null, this);
 
+  this.lightTwo = this.physics.add.sprite(240, 240, 'light');
+
+  this.anims.create({
+    key: 'light-2-stable',
+    frames: this.anims.generateFrameNumbers('light', { start: 6, end: 8 }),
+    frameRate: 5,
+    repeat: -1
+  });
+
+  this.lightTwo.anims.play('light-2-stable', false);
+
+  this.physics.add.overlap(this.playerLight, this.lightTwo,
+    (a, b) => {
+      b.destroy();
+      this.flags.isTwoTouched = true;
+    },
+    null, this);
 
   this.completedText = this.add.text(0, 0, "completed!", {fontSize: 30,fontFamily: "Arial"});
   this.completedText.visible = false;
@@ -65,6 +82,7 @@ function create() {
 
   this.flags = {};
   this.flags.isOneTouched = false;
+  this.flags.isTwoTouched = false;
   this.flags.isCompleted = false;
 };
 
@@ -82,7 +100,7 @@ function update() {
     this.playerLight.x += 5;
   }
 
-  this.flags.isCompleted = this.flags.isOneTouched;
+  this.flags.isCompleted = this.flags.isOneTouched && this.flags.isTwoTouched;
   if(this.flags.isCompleted) {
     this.completedText.visible = true;
   }
