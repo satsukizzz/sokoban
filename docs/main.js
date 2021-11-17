@@ -46,13 +46,26 @@ function create() {
 
   this.lightOne.anims.play('light-1-stable', false);
 
-  this.physics.add.overlap(this.playerLight, this.lightOne, (a, b) => {b.destroy()}, null, this);
+  this.physics.add.overlap(this.playerLight, this.lightOne,
+    (a, b) => {
+      b.destroy();
+      this.flags.isOneTouched = true;
+    },
+    null, this);
+
+
+  this.completedText = this.add.text(0, 0, "completed!", {fontSize: 30,fontFamily: "Arial"});
+  this.completedText.visible = false;
 
   this.keys = {};
   this.keys.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
   this.keys.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
   this.keys.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
   this.keys.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+
+  this.flags = {};
+  this.flags.isOneTouched = false;
+  this.flags.isCompleted = false;
 };
 
 function update() {
@@ -67,6 +80,11 @@ function update() {
   }
   if (this.keys.keyD.isDown) {
     this.playerLight.x += 5;
+  }
+
+  this.flags.isCompleted = this.flags.isOneTouched;
+  if(this.flags.isCompleted) {
+    this.completedText.visible = true;
   }
 
   this.move += 0.01;
