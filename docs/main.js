@@ -48,13 +48,6 @@ function create() {
 
   this.lightOne.anims.play('light-1-stable', false);
 
-  this.physics.add.overlap(this.playerLight, this.lightOne,
-    (a, b) => {
-      b.destroy();
-      this.flags.isOneTouched = true;
-    },
-    null, this);
-
   this.lightTwo = this.physics.add.sprite(240, 240, 'light');
 
   this.anims.create({
@@ -67,8 +60,14 @@ function create() {
   this.lightTwo.anims.play('light-2-stable', false);
 
   this.physics.add.collider(this.playerLight, this.lightTwo);
+  this.physics.add.collider(this.lightTwo, this.lightOne,
+    (a, b) => {
+      b.destroy();
+      this.flags.isOneDestroyed = true;
+    },
+    null, this);
 
-  this.completedText = this.add.text(0, 0, "completed!", {fontSize: 30,fontFamily: "Arial"});
+  this.completedText = this.add.text(200, 200, "completed!", {fontSize: 30, fontFamily: "Arial"});
   this.completedText.visible = false;
 
   this.keys = {};
@@ -78,8 +77,7 @@ function create() {
   this.keys.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
   this.flags = {};
-  this.flags.isOneTouched = false;
-  this.flags.isTwoTouched = false;
+  this.flags.isOneDestroyed = false;
   this.flags.isCompleted = false;
 };
 
@@ -118,7 +116,7 @@ function update() {
     this.playerLight.setVelocityX(355);
   }
 
-  this.flags.isCompleted = this.flags.isOneTouched && this.flags.isTwoTouched;
+  this.flags.isCompleted = this.flags.isOneDestroyed;
   if(this.flags.isCompleted) {
     this.completedText.visible = true;
   }
