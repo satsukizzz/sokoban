@@ -18,11 +18,13 @@ function preload() {
 
 function create() {
   //背景の描画；
-  for (let y = 0; y < c.VERTICAL_PIXELS; y++) {
-      for (let x = 0; x < c.HORIZONTAL_PIXELS; x++) {
-      this.add.image( c.GRID_SIZE*x + c.GRID_PAD, c.GRID_SIZE*y + c.GRID_PAD, 'world', firstMap[y][x]);
-    }
-  }
+  this.backgroundMap = this.make.tilemap({
+    data: firstMap,
+    tileWidth: c.GRID_SIZE,
+    tileHeight: c.GRID_SIZE,
+  });
+  this.backgroundTiles = this.backgroundMap.addTilesetImage('world');
+  this.backgroundMap.createStaticLayer(0, this.backgroundTiles, 0, 0);
 
   this.playerLight = this.physics.add.sprite(400, 320, 'light');
 
