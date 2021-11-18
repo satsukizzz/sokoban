@@ -13,7 +13,12 @@ function preload() {
     'assets/pipo-hikarimono002.png',
     { frameWidth: 32, frameHeight: 32 }
   );
-  this.move = 0;
+  //光の受け皿
+  this.load.spritesheet(
+    'lightspace',
+    'assets/pipo-hikarimono012.png',
+    { frameWidth: 64, frameHeight: 64 }
+  );
 };
 
 function create() {
@@ -37,33 +42,32 @@ function create() {
 
   this.playerLight.anims.play('player-light-stable', false);
 
-  this.lightOne = this.physics.add.sprite(450, 320, 'light');
+  this.lightspaceTwo = this.physics.add.sprite(450, 320, 'lightspace').setScale(0.5);
 
   this.anims.create({
-    key: 'light-1-stable',
-    frames: this.anims.generateFrameNumbers('light', { start: 3, end: 5 }),
+    key: 'lightspace-2',
+    frames: this.anims.generateFrameNumbers('lightspace', { start: 6, end: 8 }),
     frameRate: 5,
     repeat: -1
   });
 
-  this.lightOne.anims.play('light-1-stable', false);
+  this.lightspaceTwo.anims.play('lightspace-2', false);
 
   this.lightTwo = this.physics.add.sprite(240, 240, 'light');
 
   this.anims.create({
-    key: 'light-2-stable',
+    key: 'light-2',
     frames: this.anims.generateFrameNumbers('light', { start: 6, end: 8 }),
     frameRate: 5,
     repeat: -1
   });
 
-  this.lightTwo.anims.play('light-2-stable', false);
+  this.lightTwo.anims.play('light-2', false);
 
   this.physics.add.collider(this.playerLight, this.lightTwo);
-  this.physics.add.collider(this.lightTwo, this.lightOne,
+  this.physics.add.overlap(this.lightTwo, this.lightspaceTwo,
     (a, b) => {
-      b.destroy();
-      this.flags.isOneDestroyed = true;
+      this.flags.isTwoOverlap = true;
     },
     null, this);
 
@@ -77,7 +81,7 @@ function create() {
   this.keys.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
   this.flags = {};
-  this.flags.isOneDestroyed = false;
+  this.flags.isTwoOverlap = false;
   this.flags.isCompleted = false;
 };
 
@@ -87,6 +91,7 @@ function update() {
   this.lightTwo.setVelocityX(0);
   this.lightTwo.setVelocityY(0);
 
+  // キー入力
   if (this.keys.keyW.isDown) {
     this.playerLight.setVelocityY(-500);
   }
@@ -116,12 +121,14 @@ function update() {
     this.playerLight.setVelocityX(355);
   }
 
-  this.flags.isCompleted = this.flags.isOneDestroyed;
-  if(this.flags.isCompleted) {
-    this.completedText.visible = true;
-  }
+  // flag判定の伝播
+  this.flags.isCompleted = this.flags.isTwoOverlap;
 
-  this.move += 0.01;
+  // flagによるオブジェクトの描画
+  this.completedText.visible = this.flags.isCompleted;
+
+  // flagのオフ
+  this.flags.isTwoOverlap = false;
 };
 
 const config = {
