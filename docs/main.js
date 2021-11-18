@@ -101,6 +101,21 @@ function update() {
   if (this.keys.keyD.isDown) {
     this.playerLight.setVelocityX(500);
   }
+  if (this.keys.keyW.isDown && this.keys.keyA.isDown) {
+    this.playerLight.setVelocityY(-355);
+    this.playerLight.setVelocityX(-355);
+  }
+  if (this.keys.keyA.isDown && this.keys.keyS.isDown) {
+    this.playerLight.setVelocityY(355);
+    this.playerLight.setVelocityX(-355);
+  }
+  if (this.keys.keyS.isDown && this.keys.keyD.isDown) {
+    this.playerLight.setVelocityY(355);
+    this.playerLight.setVelocityX(355);
+  }
+  if (this.keys.keyD.isDown && this.keys.keyW.isDown) {
+    this.playerLight.setVelocityY(-355);
+    this.playerLight.setVelocityX(355);
   }
 
   this.flags.isCompleted = this.flags.isOneTouched && this.flags.isTwoTouched;
