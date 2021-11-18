@@ -66,8 +66,10 @@ function create() {
 
   this.physics.add.overlap(this.playerLight, this.lightTwo,
     (a, b) => {
-      b.destroy();
-      this.flags.isTwoTouched = true;
+      this.flags.collision.isPlayerCollided = true;
+      this.flags.collision.collidedTo = b;
+      // b.destroy();
+      // this.flags.isTwoTouched = true;
     },
     null, this);
 
@@ -84,20 +86,40 @@ function create() {
   this.flags.isOneTouched = false;
   this.flags.isTwoTouched = false;
   this.flags.isCompleted = false;
+
+  this.flags.collision = {};
+  this.flags.collision.isPlayerCollided = false;
+  this.flags.collision.collidedTo = null;
 };
 
 function update() {
   if (this.keys.keyW.isDown) {
     this.playerLight.y += -5;
+    if(this.flags.collision.isPlayerCollided) {
+      this.flags.collision.collidedTo.y += -5;
+      this.flags.collision.isPlayerCollided = false;
+    }
   }
   if (this.keys.keyS.isDown) {
     this.playerLight.y += 5;
+    if(this.flags.collision.isPlayerCollided) {
+      this.flags.collision.collidedTo.y += 5;
+      this.flags.collision.isPlayerCollided = false;
+    }
   }
   if (this.keys.keyA.isDown) {
     this.playerLight.x += -5;
+    if(this.flags.collision.isPlayerCollided) {
+      this.flags.collision.collidedTo.x += -5;
+      this.flags.collision.isPlayerCollided = false;
+    }
   }
   if (this.keys.keyD.isDown) {
     this.playerLight.x += 5;
+    if(this.flags.collision.isPlayerCollided) {
+      this.flags.collision.collidedTo.x += 5;
+      this.flags.collision.isPlayerCollided = false;
+    }
   }
 
   this.flags.isCompleted = this.flags.isOneTouched && this.flags.isTwoTouched;
