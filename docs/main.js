@@ -32,6 +32,7 @@ function create() {
   this.backgroundMap.createStaticLayer(0, this.backgroundTiles, 0, 0);
 
   this.playerLight = this.physics.add.sprite(400, 320, 'light');
+  this.playerLight.depth = 10;
 
   this.anims.create({
     key: 'player-light-stable',
@@ -43,6 +44,7 @@ function create() {
   this.playerLight.anims.play('player-light-stable', false);
 
   this.lightspaceTwo = this.physics.add.sprite(450, 320, 'lightspace').setScale(0.5);
+  this.lightspaceTwo.depth = 1;
 
   this.anims.create({
     key: 'lightspace-2',
@@ -54,7 +56,8 @@ function create() {
   this.lightspaceTwo.anims.play('lightspace-2', false);
 
   this.lightTwo = this.physics.add.sprite(240, 240, 'light');
-
+  this.lightTwo.depth = 2;
+  
   this.anims.create({
     key: 'light-2',
     frames: this.anims.generateFrameNumbers('light', { start: 6, end: 8 }),
