@@ -66,14 +66,7 @@ function create() {
 
   this.lightTwo.anims.play('light-2-stable', false);
 
-  this.physics.add.overlap(this.playerLight, this.lightTwo,
-    (a, b) => {
-      this.flags.collision.isPlayerCollided = true;
-      this.flags.collision.collidedTo = b;
-      // b.destroy();
-      // this.flags.isTwoTouched = true;
-    },
-    null, this);
+  this.physics.add.collider(this.playerLight, this.lightTwo);
 
   this.completedText = this.add.text(0, 0, "completed!", {fontSize: 30,fontFamily: "Arial"});
   this.completedText.visible = false;
@@ -88,40 +81,26 @@ function create() {
   this.flags.isOneTouched = false;
   this.flags.isTwoTouched = false;
   this.flags.isCompleted = false;
-
-  this.flags.collision = {};
-  this.flags.collision.isPlayerCollided = false;
-  this.flags.collision.collidedTo = null;
 };
 
 function update() {
+  this.playerLight.setVelocityX(0);
+  this.playerLight.setVelocityY(0);
+  this.lightTwo.setVelocityX(0);
+  this.lightTwo.setVelocityY(0);
+
   if (this.keys.keyW.isDown) {
-    this.playerLight.y += -5;
-    if(this.flags.collision.isPlayerCollided) {
-      this.flags.collision.collidedTo.y += -5;
-      this.flags.collision.isPlayerCollided = false;
-    }
+    this.playerLight.setVelocityY(-500);
   }
   if (this.keys.keyS.isDown) {
-    this.playerLight.y += 5;
-    if(this.flags.collision.isPlayerCollided) {
-      this.flags.collision.collidedTo.y += 5;
-      this.flags.collision.isPlayerCollided = false;
-    }
+    this.playerLight.setVelocityY(500);
   }
   if (this.keys.keyA.isDown) {
-    this.playerLight.x += -5;
-    if(this.flags.collision.isPlayerCollided) {
-      this.flags.collision.collidedTo.x += -5;
-      this.flags.collision.isPlayerCollided = false;
-    }
+    this.playerLight.setVelocityX(-500);
   }
   if (this.keys.keyD.isDown) {
-    this.playerLight.x += 5;
-    if(this.flags.collision.isPlayerCollided) {
-      this.flags.collision.collidedTo.x += 5;
-      this.flags.collision.isPlayerCollided = false;
-    }
+    this.playerLight.setVelocityX(500);
+  }
   }
 
   this.flags.isCompleted = this.flags.isOneTouched && this.flags.isTwoTouched;
