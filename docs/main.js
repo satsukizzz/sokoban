@@ -282,7 +282,7 @@ function update() {
 };
 
 const config = {
-  type: Phaser.CANVAS,
+  type: Phaser.WEBGL,
   width: c.CANVAS_WIDTH,
   height: c.CANVAS_HEIGHT,
   physics: {
