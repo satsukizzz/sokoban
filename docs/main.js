@@ -31,7 +31,7 @@ function g2p(gridNum) {
 }
 
 function create() {
-  //背景の描画；
+  // add background tiles
   this.backgroundMap = this.make.tilemap({
     data: firstMap,
     tileWidth: c.GRID_SIZE,
@@ -40,6 +40,7 @@ function create() {
   this.backgroundTiles = this.backgroundMap.addTilesetImage('world');
   this.backgroundMap.createStaticLayer(0, this.backgroundTiles, 0, 0);
 
+  // add players
   this.playerLight = this.physics.add.sprite(g2p(10), g2p(7), 'light');
   this.playerLight.depth = 10;
 
@@ -52,6 +53,7 @@ function create() {
 
   this.playerLight.anims.play('player-light-stable', false);
 
+  // add reaction objects
   this.lightspaceTwo = this.physics.add.sprite(g2p(10), g2p(1), 'lightspace').setScale(0.5);
   this.lightspaceTwo.depth = 1;
 
@@ -76,25 +78,31 @@ function create() {
 
   this.lightTwo.anims.play('light-2', false);
 
-  this.physics.add.collider(this.playerLight, this.lightTwo);
-  this.physics.add.overlap(this.lightTwo, this.lightspaceTwo,
-    (a, b) => {
-      this.flags.isTwoOverlap = true;
-    },
-    null, this);
+  // add obstacles
 
+  // add text objects
   this.completedText = this.add.text(g2p(6), g2p(6), "completed!", {fontSize: 64, fontFamily: "Arial"});
   this.completedText.visible = false;
 
+  // add key objects
   this.keys = {};
   this.keys.keyW = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
   this.keys.keyA = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
   this.keys.keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
   this.keys.keyD = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
+  // add flags
   this.flags = {};
   this.flags.isTwoOverlap = false;
   this.flags.isCompleted = false;
+
+  // collisions and overlaps
+  this.physics.add.collider(this.playerLight, this.lightTwo);
+  this.physics.add.overlap(this.lightTwo, this.lightspaceTwo,
+    (a, b) => {
+      this.flags.isTwoOverlap = true;
+    },
+    null, this);
 };
 
 function update() {
