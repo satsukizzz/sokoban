@@ -5,7 +5,7 @@ function preload() {
   this.load.spritesheet(
     'world',
     'assets/worldBig.png',
-    {frameWidth: 32, frameHeight: 32}
+    { frameWidth: 32, frameHeight: 32 }
   );
   //光
   this.load.spritesheet(
@@ -47,7 +47,8 @@ function create() {
     tileHeight: c.GRID_SIZE,
   });
   this.backgroundTiles = this.backgroundMap.addTilesetImage('world');
-  this.backgroundMap.createStaticLayer(0, this.backgroundTiles, 0, 0);
+  this.backgroundLayer = this.backgroundMap.createStaticLayer(0, this.backgroundTiles, 0, 0);
+  this.backgroundLayer.setCollision(38);
 
   // add players
   this.playerLight = this.physics.add.sprite(gc2p(10), gc2p(7), 'light');
@@ -187,6 +188,13 @@ function create() {
   this.flags.isCompleted = false;
 
   // collisions and overlaps
+  this.physics.add.collider(this.playerLight, this.backgroundLayer);
+  // * dunno why lights dont collide walls when pushed by player light
+  this.physics.add.collider(this.lightOne, this.backgroundLayer);
+  this.physics.add.collider(this.lightTwo, this.backgroundLayer);
+  this.physics.add.collider(this.lightThree, this.backgroundLayer);
+  this.physics.add.collider(this.lightFour, this.backgroundLayer);
+
   this.physics.add.collider(this.playerLight, this.lightTwo);
   this.physics.add.overlap(this.lightTwo, this.lightspaceTwo,
     (a, b) => {
@@ -287,7 +295,7 @@ const config = {
   height: c.CANVAS_HEIGHT,
   physics: {
     default: 'arcade',
-    arcade: {debug: false}
+    arcade: { debug: false }
   },
   scene: {
     preload,
