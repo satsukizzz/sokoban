@@ -4,8 +4,8 @@ function preload() {
   //背景の画像
   this.load.spritesheet(
     'world',
-    'assets/world.png',
-    {frameWidth: 16, frameHeight: 16}
+    'assets/worldBig.png',
+    {frameWidth: 32, frameHeight: 32}
   );
   //光
   this.load.spritesheet(
@@ -21,6 +21,15 @@ function preload() {
   );
 };
 
+/**
+ * grid to pixel
+ * @param {int} gridNum 
+ * @returns {int}
+ */
+function g2p(gridNum) {
+  return c.GRID_SIZE*gridNum + c.GRID_PAD;
+}
+
 function create() {
   //背景の描画；
   this.backgroundMap = this.make.tilemap({
@@ -31,7 +40,7 @@ function create() {
   this.backgroundTiles = this.backgroundMap.addTilesetImage('world');
   this.backgroundMap.createStaticLayer(0, this.backgroundTiles, 0, 0);
 
-  this.playerLight = this.physics.add.sprite(400, 320, 'light');
+  this.playerLight = this.physics.add.sprite(g2p(10), g2p(7), 'light');
   this.playerLight.depth = 10;
 
   this.anims.create({
@@ -43,7 +52,7 @@ function create() {
 
   this.playerLight.anims.play('player-light-stable', false);
 
-  this.lightspaceTwo = this.physics.add.sprite(450, 320, 'lightspace').setScale(0.5);
+  this.lightspaceTwo = this.physics.add.sprite(g2p(10), g2p(1), 'lightspace').setScale(0.5);
   this.lightspaceTwo.depth = 1;
 
   this.anims.create({
@@ -55,9 +64,9 @@ function create() {
 
   this.lightspaceTwo.anims.play('lightspace-2', false);
 
-  this.lightTwo = this.physics.add.sprite(240, 240, 'light');
+  this.lightTwo = this.physics.add.sprite(g2p(10), g2p(5), 'light');
   this.lightTwo.depth = 2;
-  
+
   this.anims.create({
     key: 'light-2',
     frames: this.anims.generateFrameNumbers('light', { start: 6, end: 8 }),
@@ -74,7 +83,7 @@ function create() {
     },
     null, this);
 
-  this.completedText = this.add.text(200, 200, "completed!", {fontSize: 30, fontFamily: "Arial"});
+  this.completedText = this.add.text(g2p(6), g2p(6), "completed!", {fontSize: 64, fontFamily: "Arial"});
   this.completedText.visible = false;
 
   this.keys = {};
