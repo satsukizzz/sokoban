@@ -22,12 +22,21 @@ function preload() {
 };
 
 /**
- * grid to pixel
+ * grid top-left to pixel
  * @param {int} gridNum 
  * @returns {int}
  */
-function g2p(gridNum) {
-  return c.GRID_SIZE*gridNum + c.GRID_PAD;
+ function g2p(gridNum) {
+  return c.GRID_SIZE * gridNum;
+}
+
+/**
+ * grid center to pixel
+ * @param {int} gridNum 
+ * @returns {int}
+ */
+ function gc2p(gridNum) {
+  return g2p(gridNum) + c.GRID_PAD;
 }
 
 function create() {
@@ -41,7 +50,7 @@ function create() {
   this.backgroundMap.createStaticLayer(0, this.backgroundTiles, 0, 0);
 
   // add players
-  this.playerLight = this.physics.add.sprite(g2p(10), g2p(7), 'light');
+  this.playerLight = this.physics.add.sprite(gc2p(10), gc2p(7), 'light');
   this.playerLight.depth = 10;
 
   this.anims.create({
@@ -54,7 +63,7 @@ function create() {
   this.playerLight.anims.play('player-light-stable', false);
 
   // add reaction objects
-  this.lightspaceTwo = this.physics.add.sprite(g2p(10), g2p(1), 'lightspace').setScale(0.5);
+  this.lightspaceTwo = this.physics.add.sprite(gc2p(10), gc2p(1), 'lightspace').setScale(0.5);
   this.lightspaceTwo.depth = 1;
 
   this.anims.create({
@@ -66,7 +75,7 @@ function create() {
 
   this.lightspaceTwo.anims.play('lightspace-2', false);
 
-  this.lightTwo = this.physics.add.sprite(g2p(10), g2p(5), 'light');
+  this.lightTwo = this.physics.add.sprite(gc2p(10), gc2p(5), 'light');
   this.lightTwo.depth = 2;
 
   this.anims.create({
@@ -81,7 +90,7 @@ function create() {
   // add obstacles
 
   // add text objects
-  this.completedText = this.add.text(g2p(6), g2p(6), "completed!", {fontSize: 64, fontFamily: "Arial"});
+  this.completedText = this.add.text(g2p(15), g2p(18), "completed!", { fontSize: 64, fontFamily: "Arial" });
   this.completedText.visible = false;
 
   // add key objects
